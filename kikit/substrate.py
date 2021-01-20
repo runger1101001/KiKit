@@ -476,10 +476,12 @@ class Substrate:
         splitPointB1 = closestIntersectionPoint(np.array(sideOriginB), direction, boundary, maxHeight)
         splitPointA2 = closestIntersectionPoint(np.array(splitPointA1), direction, boundary, maxHeight)
         splitPointB2 = closestIntersectionPoint(np.array(splitPointB1), direction, boundary, maxHeight)
-        #shiftedOutline = cutOutline(splitPointB, boundary)
-        #tabFace = splitLine(shiftedOutline, splitPointA)[0]
-        tabFace1 = shapely.geometry.collection.GeometryCollection([splitPointA1, splitPointB1])
-        tabFace2 = shapely.geometry.collection.GeometryCollection([splitPointA2, splitPointB2])
+        shiftedOutline = cutOutline(splitPointB1, boundary)
+        tabFace1 = splitLine(shiftedOutline, splitPointA1)[0]
+        shiftedOutline = cutOutline(splitPointB2, boundary)
+        tabFace2 = splitLine(shiftedOutline, splitPointA2)[0]
+        #tabFace1 = shapely.geometry.collection.GeometryCollection([splitPointA1, splitPointB1])
+        #tabFace2 = shapely.geometry.collection.GeometryCollection([splitPointA2, splitPointB2])
         tab = Polygon([splitPointA1, splitPointB1, splitPointB2, splitPointA2])
         #print("Found a tab: "+tab)
         return tab, tabFace1, tabFace2        
