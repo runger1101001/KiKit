@@ -481,7 +481,7 @@ class Substrate:
         tabFace1 = shapely.geometry.collection.GeometryCollection([splitPointA1, splitPointB1])
         tabFace2 = shapely.geometry.collection.GeometryCollection([splitPointA2, splitPointB2])
         tab = Polygon([splitPointA1, splitPointB1, splitPointB2, splitPointA2])
-        print("Found a tab: "+tab)
+        #print("Found a tab: "+tab)
         return tab, tabFace1, tabFace2        
 
     def millFillets(self, millRadius):
