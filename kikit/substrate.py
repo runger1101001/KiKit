@@ -472,10 +472,10 @@ class Substrate:
         sideOriginA = origin + makePerpendicular(direction) * width / 2
         sideOriginB = origin - makePerpendicular(direction) * width / 2
         boundary = self.substrates.boundary
-        splitPointA1 = closestIntersectionPoint(sideOriginA, direction, boundary, maxHeight)
-        splitPointB1 = closestIntersectionPoint(sideOriginB, direction, boundary, maxHeight)
-        splitPointA2 = closestIntersectionPoint(splitPointA1, direction, boundary, maxHeight)
-        splitPointB2 = closestIntersectionPoint(splitPointB1, direction, boundary, maxHeight)
+        splitPointA1 = closestIntersectionPoint(np.array(sideOriginA), direction, boundary, maxHeight)
+        splitPointB1 = closestIntersectionPoint(np.array(sideOriginB), direction, boundary, maxHeight)
+        splitPointA2 = closestIntersectionPoint(np.array(splitPointA1), direction, boundary, maxHeight)
+        splitPointB2 = closestIntersectionPoint(np.array(splitPointB1), direction, boundary, maxHeight)
         #shiftedOutline = cutOutline(splitPointB, boundary)
         #tabFace = splitLine(shiftedOutline, splitPointA)[0]
         tabFace1 = shapely.geometry.collection.GeometryCollection([splitPointA1, splitPointB1])
