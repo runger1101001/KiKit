@@ -920,10 +920,11 @@ class Panel:
         for line in lines:
             origin = line.GetStart()
             direction = line.GetEnd() - line.GetStart()
-            tab, cut = self.boardSubstrate.tab(origin, direction, tabWidth,
+            tab, cut1, cut2 = self.boardSubstrate.tab(origin, direction, tabWidth,
                 line.GetLength())
             tabs.append(tab)
-            cuts.append(cut)
+            cuts.append(cut1)
+            cuts.append(cut2)
             self.board.Remove(line)
         return tabs, cuts
 

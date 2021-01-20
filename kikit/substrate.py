@@ -453,7 +453,6 @@ class Substrate:
 
         Returns a pair tab and cut outline. Add the tab it via
         uion - batch adding of geometry is more efficient.
-        """
         origin = np.array(origin)
         direction = normalize(direction)
         sideOriginA = origin + makePerpendicular(direction) * width / 2
@@ -467,6 +466,23 @@ class Substrate:
         tabFace = splitLine(shiftedOutline, splitPointA)[0]
         tab = Polygon(list(tabFace.coords) + [sideOriginA, sideOriginB])
         return tab, tabFace
+        """
+        origin = np.array(origin)
+        direction = normalize(direction)
+        sideOriginA = origin + makePerpendicular(direction) * width / 2
+        sideOriginB = origin - makePerpendicular(direction) * width / 2
+        boundary = self.substrates.boundary
+        splitPointA1 = closestIntersectionPoint(sideOriginA, direction, boundary, maxHeight)
+        splitPointB1 = closestIntersectionPoint(sideOriginB, direction, boundary, maxHeight)
+        splitPointA2 = closestIntersectionPoint(splitPointA1, direction, boundary, maxHeight)
+        splitPointB2 = closestIntersectionPoint(splitPointB1, direction, boundary, maxHeight)
+        #shiftedOutline = cutOutline(splitPointB, boundary)
+        #tabFace = splitLine(shiftedOutline, splitPointA)[0]
+        tabFace1 = shapely.geometry.collection.GeometryCollection([splitPointA1, splitPointB1])
+        tabFace2 = shapely.geometry.collection.GeometryCollection([splitPointA2, splitPointB2])
+        tab = Polygon([splitPointA1, splitPointB1, splitPointB2, splitPointA2])
+        print("Found a tab: "+tab)
+        return tab, tabFace1, tabFace2        
 
     def millFillets(self, millRadius):
         """
